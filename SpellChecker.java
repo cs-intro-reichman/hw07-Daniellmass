@@ -8,7 +8,6 @@ public class SpellChecker {
 		String[] dictionary = readDictionary("dictionary.txt");
 		String correction = spellChecker(word, threshold, dictionary);
 		System.out.println(correction); 
-	
  }
 	
 	
@@ -63,10 +62,17 @@ public class SpellChecker {
 		String wordL = word.toLowerCase();
 		for (int i = 0; i < 3000; i++) {
 			String dWord = dictionary[i];
-			if ((levenshtein(wordL, dWord) <= threshold) && dWord.length() >= wordL.length())   {	
-			return dWord;
+			if (levenshtein(wordL, dWord) <= threshold && wordL.length() <= dWord.length()) {
+				return dWord;
 			}
-		}
-		return wordL;	
+					 
+        }
+	    for (int i = 0; i < 3000; i++) {
+		    String dWord = dictionary[i];
+		    if (levenshtein(wordL, dWord) <= threshold && wordL.length() >= dWord.length()) {
+			return dWord;
+		}	
     }
+	return wordL;
+  }
 }
