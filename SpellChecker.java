@@ -59,20 +59,18 @@ public class SpellChecker {
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-		String wordL = word.toLowerCase();
-		for (int i = 0; i < 3000; i++) {
-			String dWord = dictionary[i];
-			if (levenshtein(wordL, dWord) <= threshold && wordL.length() <= dWord.length()) {
-				return dWord;
-			}
-					 
+	 String wordL = word.toLowerCase();
+     String minDWord = "";
+	 // Max Value of int
+     int minDistance = 2147483647;
+     for (int i = 0; i < dictionary.length; i++) {
+        String dWord = dictionary[i];
+        int distance = levenshtein(wordL, dWord);
+        if (distance <= threshold && distance < minDistance) {
+            minDistance = distance;
+            minDWord = dWord;
         }
-	    for (int i = 0; i < 3000; i++) {
-		    String dWord = dictionary[i];
-		    if (levenshtein(wordL, dWord) <= threshold && wordL.length() >= dWord.length()) {
-			return dWord;
-		}	
     }
-	return wordL;
-  }
+    return minDWord.isEmpty() ? wordL : minDWord;
+}
 }
