@@ -3,7 +3,6 @@
 public class HashTagTokenizer {
 
 	public static void main(String[] args) {
-
 		String hashTag = args[0];
 		String []dictionary = readDictionary("dictionary.txt");
 		breakHashTag(hashTag, dictionary);
@@ -27,8 +26,6 @@ public class HashTagTokenizer {
 		}
 		return false;
 	}
-
-	//Helper Method 
 
 	public static boolean equals (String strF, String strS) {
 		boolean ans = false;
@@ -63,8 +60,8 @@ public class HashTagTokenizer {
 		}
 		for (int i = 1; i <= N; i++) {
 			if (existInDictionary(hashtgLc.substring(0, i), dictionary) == true) {
-				String printHash = hashtgLc.substring(0, i);
-				System.out.println(printHash);
+				String printHsh = hashtgLc.substring(0, i);
+				System.out.println(printHsh);
 				String rmainHsh = hashtgLc.substring(i, N);
 				breakHashTag(rmainHsh, dictionary);
 			}

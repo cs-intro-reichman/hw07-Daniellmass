@@ -8,15 +8,12 @@ public class SpellChecker {
 		String[] dictionary = readDictionary("dictionary.txt");
 		String correction = spellChecker(word, threshold, dictionary);
 		System.out.println(correction); 
- }
+    }
 	
-	
-
-
 	public static String tail(String str) {
 		String tailStr = str;
 		int tailLngth = tailStr.length();
-		if(tailLngth <= 1) {
+		if (tailLngth <= 1) {
 			tailStr = "";
 			return tailStr;
 		}
@@ -59,18 +56,18 @@ public class SpellChecker {
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-	 String wordL = word.toLowerCase();
-     String minDWord = "";
-	 // Max Value of int
-     int minDistance = 2147483647;
-     for (int i = 0; i < dictionary.length; i++) {
+	  String wordL = word.toLowerCase();
+      String minDWord = "";
+	  // Max Value of int
+       int minDist = 2147483647;
+       for (int i = 0; i < dictionary.length; i++) {
         String dWord = dictionary[i];
-        int distance = levenshtein(wordL, dWord);
-        if (distance <= threshold && distance < minDistance) {
-            minDistance = distance;
+        int dist = levenshtein(wordL, dWord);
+        if (dist <= threshold && dist < minDist) {
+            minDist = dist;
             minDWord = dWord;
         }
+      }
+     return minDWord.isEmpty() ? wordL : minDWord;
     }
-    return minDWord.isEmpty() ? wordL : minDWord;
-}
 }
