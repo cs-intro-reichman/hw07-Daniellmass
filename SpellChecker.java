@@ -7,29 +7,67 @@ public class SpellChecker {
 		int threshold = Integer.parseInt(args[1]);
 		String[] dictionary = readDictionary("dictionary.txt");
 		String correction = spellChecker(word, threshold, dictionary);
-		System.out.println(correction);
-	}
-
+		System.out.println(correction); 
+    }
+	
 	public static String tail(String str) {
-		// Your code goes here
+		String tailStr = str;
+		int tailLngth = tailStr.length();
+		if (tailLngth <= 1) {
+			tailStr = "";
+			return tailStr;
+		}
+		else {
+			tailStr = tailStr.substring(1, tailLngth);
+			return tailStr;	
+		}
 	}
 
 	public static int levenshtein(String word1, String word2) {
-		// Your code goes here
+		String a = word1.toLowerCase();
+		String b = word2.toLowerCase();
+		if (b.length() == 0) {
+			return a.length();
+		}
+		else if (a.length() == 0) {
+			return b.length();
+		}
+		else if (a.charAt(0) == b.charAt(0)) {
+			return levenshtein(tail(a), tail(b));
+		}
+		else {
+		int insert = levenshtein(a, tail(b));
+		int delete = levenshtein(tail(a), b);
+		int sub = levenshtein(tail(a), tail(b));
+		return  1 + Math.min(Math.min(delete, sub), insert);	
+		}
 	}
+
+
 
 	public static String[] readDictionary(String fileName) {
 		String[] dictionary = new String[3000];
-
-		In in = new In(fileName);
-
-		// Your code here
-
+        In in = new In(fileName);
+		for (int i = 0; i < 3000; i++) {
+			String line = in.readLine();
+			dictionary [i] = line;
+		}
 		return dictionary;
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-		// Your code goes here
-	}
-
+	  String wordL = word.toLowerCase();
+      String minDWord = "";
+	  // Max Value of int
+       int minDist = 2147483647;
+       for (int i = 0; i < dictionary.length; i++) {
+        String dWord = dictionary[i];
+        int dist = levenshtein(wordL, dWord);
+        if (dist <= threshold && dist < minDist) {
+            minDist = dist;
+            minDWord = dWord;
+        }
+      }
+     return minDWord.isEmpty() ? wordL : minDWord;
+    }
 }
